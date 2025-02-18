@@ -52,6 +52,18 @@ Sample generated images during training:
 
 ![Generated Anime Faces](https://github.com/user-attachments/assets/9674eda0-2e1f-476b-a6b5-386540f2e863)
 
+## Handling Unreadable Images  
+
+During dataset loading, some images might be corrupted, incomplete, or hidden system files (such as `.DS_Store` or `._filename` on macOS). These files can cause errors during training. To ensure only valid images are used, we implemented a **custom dataset loader** that automatically filters out unreadable files.  
+
+### 🛠 How It Works  
+- A function `is_valid_image(filepath)` attempts to open each image using **PIL (Pillow)** and verifies its integrity.  
+- If an image is corrupted or hidden, it is ignored.  
+- The `FilteredImageFolder` class extends `torchvision.datasets.ImageFolder` and applies this validation before loading data.  
+
+This method helps maintain **data quality**, prevents crashes, and ensures smooth training. 🚀  
+
+
 ## Future Improvements
 - Implementing conditional GANs for more control over generated outputs.
 - Exploring different architectures like StyleGAN for better quality images.
